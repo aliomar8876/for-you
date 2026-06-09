@@ -6,44 +6,46 @@ const loader = document.getElementById("loader");
 const loaderText = document.getElementById("loaderText");
 
 setTimeout(() => {
-  loaderText.textContent = "جاهز... بس الكلام مهم شوية ❤️";
+    loaderText.textContent = "جاهز... بس الكلام مهم شوية ❤️";
 }, 1200);
 
 setTimeout(() => {
-  loader.classList.add("hide");
+    loader.classList.add("hide");
 }, 2600);
 
 function showScreen(number) {
-  screens.forEach(screen => screen.classList.remove("active"));
-  document.getElementById(`screen-${number}`).classList.add("active");
+    screens.forEach(screen => screen.classList.remove("active"));
+    document.getElementById(`screen-${number}`).classList.add("active");
 
-  if (number === "7" || number === 7) {
-    burstHearts();
-  }
+    if (number === "7" || number === 7) {
+        burstHearts();
+    }
 }
 
 nextButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    showScreen(btn.dataset.next);
-  });
+    btn.addEventListener("click", () => {
+        showScreen(btn.dataset.next);
+    });
 });
 
 forgiveBtn.addEventListener("click", () => {
-  showScreen(7);
+    showScreen(7);
 });
 
 function moveRunButton() {
-  const btnRect = runBtn.getBoundingClientRect();
-  runBtn.style.position = "fixed";
+    const container = document.querySelector(".buttons");
+    const btnRect = runBtn.getBoundingClientRect();
 
-  const maxX = window.innerWidth - btnRect.width - 20;
-  const maxY = window.innerHeight - btnRect.height - 20;
+    runBtn.style.position = "absolute";
 
-  const x = Math.max(20, Math.random() * maxX);
-  const y = Math.max(20, Math.random() * maxY);
+    const maxX = container.offsetWidth - runBtn.offsetWidth;
+    const maxY = container.offsetHeight - runBtn.offsetHeight;
 
-  runBtn.style.left = `${x}px`;
-  runBtn.style.top = `${y}px`;
+    const x = Math.max(0, Math.random() * maxX);
+    const y = Math.max(0, Math.random() * maxY);
+
+    runBtn.style.left = `${x}px`;
+    runBtn.style.top = `${y}px`;
 }
 
 runBtn.addEventListener("mouseover", moveRunButton);
@@ -51,19 +53,19 @@ runBtn.addEventListener("click", moveRunButton);
 runBtn.addEventListener("touchstart", moveRunButton);
 
 function createHeart() {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.textContent = Math.random() > 0.5 ? "❤️" : "💕";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 20 + 14 + "px";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = Math.random() > 0.5 ? "❤️" : "💕";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 14 + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
 }
 
 setInterval(createHeart, 650);
 
 function burstHearts() {
-  for (let i = 0; i < 45; i++) {
-    setTimeout(createHeart, i * 45);
-  }
+    for (let i = 0; i < 45; i++) {
+        setTimeout(createHeart, i * 45);
+    }
 }
